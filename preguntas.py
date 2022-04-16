@@ -171,6 +171,7 @@ def pregunta_10():
     tbl = tbl.sort_values(["_c1", "_c2"])
     tbl["_c2"] = tbl["_c2"].map(lambda _c2: str(_c2))
     tbl = tbl.groupby("_c1", as_index=False).agg({"_c2": lambda _c2: ':'.join(_c2)})
+    tbl = tbl.set_index("_c1")
     return tbl
 
 
@@ -216,7 +217,7 @@ def pregunta_12():
     tbl["_c5a"] = tbl["_c5a"].apply(lambda _c5a: str(_c5a))
     tbl["_c5b"] = tbl["_c5b"].apply(lambda _c5b: str(_c5b))
     tbl["_c5"] = tbl["_c5a"] + ":" + tbl["_c5b"]
-    tbl = tbl.groupby("_c0").agg({"_c5": lambda _c5: ','.join(_c5)})
+    tbl = tbl.groupby("_c0", as_index=False).agg({"_c5": lambda _c5: ','.join(_c5)})
     return tbl
 
 
