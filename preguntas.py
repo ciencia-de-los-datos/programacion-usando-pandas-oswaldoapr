@@ -50,7 +50,7 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return tbl0["_c1"].value_counts().sort_values()
+    return tbl0["_c1"].value_counts().sort_index()
 
 
 def pregunta_04():
@@ -151,7 +151,6 @@ def pregunta_09():
     tbl = tbl0.copy()
     tbl["year"] = tbl["_c3"].map(lambda fecha: fecha.split('-')[0])
     return tbl
-print(pregunta_09())
 
 
 def pregunta_10():
