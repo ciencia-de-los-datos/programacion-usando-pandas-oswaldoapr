@@ -167,7 +167,11 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    tbl = tbl0.copy()
+    tbl = tbl.sort_values(["_c1", "_c2"])
+    tbl["_c2"] = tbl["_c2"].map(lambda _c2: str(_c2))
+    tbl = tbl.groupby("_c1", as_index=False).agg({"_c2": lambda _c2: ':'.join(_c2)})
+    return tbl
 
 
 def pregunta_11():
@@ -186,7 +190,10 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+    tbl = tbl1.copy()
+    tbl = tbl.sort_values(["_c0", "_c4"])
+    tbl = tbl.groupby("_c0", as_index=False).agg({"_c4": lambda _c4: ','.join(_c4)})
+    return tbl
 
 
 def pregunta_12():
@@ -204,7 +211,13 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+    tbl = tbl2.copy()
+    tbl = tbl.sort_values(["_c0", "_c5a", "_c5b"])
+    tbl["_c5a"] = tbl["_c5a"].apply(lambda _c5a: str(_c5a))
+    tbl["_c5b"] = tbl["_c5b"].apply(lambda _c5b: str(_c5b))
+    tbl["_c5"] = tbl["_c5a"] + ":" + tbl["_c5b"]
+    tbl = tbl.groupby("_c0").agg({"_c5": lambda _c5: ','.join(_c5)})
+    return tbl
 
 
 def pregunta_13():
@@ -221,4 +234,6 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+    tbl = pd.merge(tbl2, tbl0, on="_c0")
+    tbl = tbl.groupby("_c1")["_c5b"].sum()
+    return tbl
